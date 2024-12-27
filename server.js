@@ -22,7 +22,7 @@ app.use("/api/address", require("./routes/address"));
 app.use("", require("./routes/stripe"));
 
 if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app
+  // Serve static files from the React app         
   app.use(express.static(path.join(__dirname, 'client/build')));
 
   // Route all other requests to the React app

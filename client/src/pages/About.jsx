@@ -2,6 +2,7 @@ import React from "react";
 import AboutHeader from "../assets/page-header/about-header.jpg";
 
 const About = () => {
+  
   return (
     <section className="h-auto pt-2 min-h-[80vh]">
       <div className="max-w-xl sm:max-w-4xl lg:max-w-7xl relative px-5 pt-20 pb-12 items-center mx-auto lg:mx-20 xl:mx-28 2xl:mx-40 3xl:mx-auto lg:pb-2 lg:px-1 xl:px-3 2xl:px-1">
