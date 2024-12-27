@@ -9,7 +9,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "../config/config.env" });
 
 // @ route GET api/user
-// @ desc  Get registered user
+// @ desc  Get registered user      
 // @ access Private
 router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {

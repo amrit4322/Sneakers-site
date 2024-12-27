@@ -19,7 +19,7 @@ const ProductPage = () => {
     if (!loading) {
       dispatch(getProductItem({ productId: params.id }));
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line       
   }, [loading]);
 
   return (

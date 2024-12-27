@@ -22,7 +22,7 @@ const Checkout = () => {
 
   useEffect(() => {
     dispatch(cartDisplay(false));
-    // eslint-disable-next-line
+    // eslint-disable-next-line    
   }, []);
 
   const {

@@ -1,6 +1,8 @@
 import React from "react";
 import ContactHeader from "../assets/page-header/contact-header.jpg";
 
+
+
 const Contact = () => {
   document.title = "Contact Page"
 

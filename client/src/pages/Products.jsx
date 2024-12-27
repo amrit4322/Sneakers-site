@@ -23,7 +23,7 @@ const Products = () => {
   useEffect(() => {
     if (!loading) {
       // get filtered product choose return an empty array (bcos gender = men or women in products array)
-      // so that selectedFilers fxn can run successfully from store
+      // so that selectedFilers fxn can run successfully from store       
       dispatch(getFilteredProducts({ gender: "all" }));
       // dispatch(getProducts({ products }));
       dispatch(

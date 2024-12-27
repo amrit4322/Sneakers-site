@@ -12,7 +12,7 @@ dotenv.config({ path: "../config/config.env" });
 
 // @ route GET api/order
 // @ desc  Get orders of all user
-// @ access Private
+// @ access Private       
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
     const orders = await Order.find();

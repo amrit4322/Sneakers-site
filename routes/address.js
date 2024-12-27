@@ -24,7 +24,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-// @ route GET api/address
+// @ route GET api/address         
 // @ desc  Get user address
 // @ access Private
 router.get("/:id", verifyTokenAndAuthorization, async (req, res) => {

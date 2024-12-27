@@ -22,4 +22,5 @@ const AddressSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
 module.exports = mongoose.model("Address", AddressSchema)

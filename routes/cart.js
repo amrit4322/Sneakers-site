@@ -25,7 +25,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 
 
 // @ route GET api/cart
-// @ desc  Get user cart
+// @ desc  Get user cart       
 // @ access Private
 router.get("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {

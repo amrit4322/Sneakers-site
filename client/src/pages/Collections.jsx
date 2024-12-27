@@ -18,7 +18,7 @@ const Collections = () => {
             className='opacity-10 h-full w-full object-cover'
           />
         </div>
-        <CollectionsCards />
+        <CollectionsCards />      
       </div>
     </section>
   );

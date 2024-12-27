@@ -32,7 +32,7 @@ const Men = () => {
         selectFilters({ filter: { ...filter, color: "", company: "" } })
       );
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line      
   }, [loading, gender]);
 
   return (
