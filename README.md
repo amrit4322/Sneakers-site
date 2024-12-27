@@ -1,19 +1,23 @@
 # Frontend Mentor - E-commerce product page solution
 
-This is a solution to the [E-commerce product page challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/ecommerce-product-page-UPsZ9MJp6). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+## How to start
+
+```
+npm run install-all
+```
+```
+npm run dev
+```
 
 ## Table of contents
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
-  - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
-- [Author](#author)
 
 
 ## Overview
@@ -36,12 +40,7 @@ Users should be able to:
 
 ![](./client/design/sneakers-ecommerce-website.herokuapp.com.png)
 
-### Links
-
-- Solution URL: [https://github.com/Hikmahx/sneakers-ecommerce-website](https://github.com/Hikmahx/sneakers-ecommerce-website)
-- Live Site URL: [Sneakers MERN Ecommerce Website](https://sneakers-z66o.onrender.com/)
-
-## My process
+## Process
 
 ### Built with
 
@@ -57,29 +56,10 @@ Users should be able to:
 - [Heroku](https://www.heroku.com/) -  Cloud Application Platform
 - [Redux Toolkit](https://redux-toolkit.js.org/) - Toolset for efficient Redux development
 
-
-
-### What I learned
-
-This is my first deployed fullstack application using the MERN stack. As I progressed with this application, I find myself improving a lot and also learnt how to avoid specific mistakes and debug my app better. I believe this project has made it easier for me to make full stack applications better and faster.
-
-
-
 ### Useful resources
 
-- [Lama Dev](https://www.youtube.com/c/lamadev) - If you want to create any MERN stack project, lama dev is the place to start from.
-- [Dribble](dribbble.com) - Most of the inspiration for designing this website came from here. Be sure to check it out.
-- [Logrocket](https://blog.logrocket.com/handling-user-authentication-redux-toolkit/) - I used this to understand better login, logout and registration process.
-- [Unsplash](https://unsplash.com/) - This site is an endless reservior of images. I used this for my product images, using google image to find the names of the sneakers in the images.
-- [Stack Overflow](https://stackoverflow.com) - As always, stackoverflow is the place I go whenever I need any help.
-
-
-
-
-
-## Author
-
-- Github - [Hikmah Yousuph](https://github.com/Hikmahx)
-- Frontend Mentor - [@Hikmahx](https://www.frontendmentor.io/profile/Hikmahx)
-- Email - [hikmayousuph@gmail.com](hikmayousuph@gmail.com)
-- LinkedIn - [Hikmah Yousuph](linkedin.com/in/hikmah-yousuph-449467204/)
+- [Lama Dev](https://www.youtube.com/c/lamadev)
+- [Dribble](dribbble.com)
+- [Logrocket](https://blog.logrocket.com/handling-user-authentication-redux-toolkit/)
+- [Unsplash](https://unsplash.com/)
+- [Stack Overflow](https://stackoverflow.com)

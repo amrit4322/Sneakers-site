@@ -4,11 +4,8 @@
   "description": "A fullstack website for trading sneakers",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "clientinstall": "npm install --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && npm install --legacy-peer-deps --prefix client",
+    "dev": "concurrently \"nodemon server.js\" \"npm start --prefix client\"",
     "build": "npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
@@ -19,15 +16,20 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.7",
     "dotenv": "^16.0.1",
+    "execp": "^0.0.1",
     "express": "^4.18.0",
     "express-validator": "^6.14.0",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
+    "path": "^0.12.7",
     "react-hook-form": "^7.33.1",
     "redux-persist": "^6.0.0",
+    "request": "^2.88.2",
     "stripe": "^10.0.0"
   }
 }
