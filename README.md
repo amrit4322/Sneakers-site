@@ -14,7 +14,7 @@ npm run dev
 - [Overview](#overview)
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
-- [My process](#my-process)
+- [Process](#Process)
   - [Built with](#built-with)
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
