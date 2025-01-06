@@ -63,3 +63,19 @@ Users should be able to:
 - [Logrocket](https://blog.logrocket.com/handling-user-authentication-redux-toolkit/)
 - [Unsplash](https://unsplash.com/)
 - [Stack Overflow](https://stackoverflow.com)
+
+
+### Configure Environment Variables for the Client:
+
+1. Navigate to the client folder.
+2. Create a .env file in the client folder.
+3. Copy the content from the example.env file and paste it into the newly created .env file.
+4. Modify the values in the .env file according to your environment settings.
+
+
+### Configure Environment Variables for the Backend:
+
+1. Go to the root directory of the project.
+2. Create a config.env file in the config folder.
+3. Copy the content from the example.env file and paste it into the config.env file located in the config folder.
+4. Update the values for the backend variables as per your environment
