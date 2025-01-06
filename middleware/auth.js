@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
 
   // Check if not token (check if the token doesn't exist)
   if (!token) {
-    // 401 unauthorized access       
+    // 401 unauthorized access
     return res.status(401).json({ msg: "No Token, authorization denied!" });
   }
 
@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
     req.user = decoded.user;
     next();
   } catch (error) {
-    console.log("Error in decoding ",error.message)
+    console.log("Error in decoding ", error.message);
     console.error(error.message);
     res.status(403).send("Token is not valid");
   }
@@ -36,9 +36,8 @@ const verifyTokenAndAuthorization = (req, res, next) => {
   });
 };
 
-
 // TO CHECK IF THE USER IS THE ONE MAKING THE REQUEST
-const verifyTokenAndUser= (req, res, next) => {
+const verifyTokenAndUser = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.id === req.body.user || req.user.isAdmin) {
       next();
@@ -57,4 +56,9 @@ const verifyTokenAndAdmin = (req, res, next) => {
     }
   });
 };
-module.exports = { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin, verifyTokenAndUser };
+module.exports = {
+  verifyToken,
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin,
+  verifyTokenAndUser,
+};

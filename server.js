@@ -23,6 +23,7 @@ app.use("/api/products", require("./routes/product"));
 app.use("/api/cart", require("./routes/cart"));
 app.use("/api/orders", require("./routes/order"));
 app.use("/api/address", require("./routes/address"));
+app.use('/api/metamask', require("./routes/metamask"));
 app.use("", require("./routes/stripe"));
 
 if (process.env.NODE_ENV === 'production') {

@@ -9,6 +9,8 @@ const {
 } = require("../middleware/auth");
 const User = require("../models/User");
 const dotenv = require("dotenv");
+const { nonces } = require("../config/nonces");
+const { ethers } = require("ethers");
 dotenv.config({ path: "../config/config.env" });
 
 // @ route    GET api/auth
@@ -16,10 +18,9 @@ dotenv.config({ path: "../config/config.env" });
 // @ access   Private
 router.get("/", verifyToken, async (req, res) => {
   try {
-   
-    const user = await User.findById(req.user.id)
+    const user = await User.findById(req.user.id);
     if (!user) {
-      return res.status(400).json({ msg: "user doesn't exist" });
+      return res.status(404).json({ msg: "User Not Found" });
     }
     res.json(user);
   } catch (err) {
@@ -34,53 +35,68 @@ router.get("/", verifyToken, async (req, res) => {
 router.post(
   "/",
   body("userAccount", "No address attached").isEthereumAddress(),
-  // body("password", "Password is required").exists(),
+  body("signature", "Signature is required").exists(),
 
   async (req, res) => {
-   
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-  
-    const { userAccount } = req.body;
+
+    const { userAccount, signature } = req.body;
 
     try {
       let user = await User.findOne({ userAccount });
-       if (!user) {
-       // if account not found
-       return res.status(400).json({ msg: "user doesn't exist" });
-      
-      
-    }
-      
+      if (!user) {
+        // if account not found
+        return res.status(404).json({ msg: "User Not Found" });
+      }
 
-     
+      const challenge = nonces[userAccount];
+      if (!challenge) {
+        return res
+          .status(403)
+          .json({ errors: "No challenge found for this address" });
+      }
 
-      const payload = {
-        user: {
-          id: user.id,
-          // only an admin can take CRUD operations to collections & delete any users
-          // if not an admin, the user can only make CRUD operations to his/her account
-          isAdmin: user.isAdmin,
-        },
-      };
-      jwt.sign(
-        payload,
-        process.env.JWTSECRET,
-        {
-          expiresIn: 360000,
-        },
-        (error, token) => {
-          if (error){ 
-            console.log("Error in jwt ",error)
-            throw error};
-          const { password, ...others } = user._doc; 
-          res.json({
-            token, user: {...others}
-          });
-        }
+      // Recover the signer from the signature
+      const recoveredAddress = ethers.verifyMessage(
+        `Login to Sneakers: ${challenge}`,
+        signature
       );
+
+      if (recoveredAddress.toLowerCase() === userAccount.toLowerCase()) {
+        delete nonces[userAccount]; // Invalidate nonce
+
+        const payload = {
+          user: {
+            id: user.id,
+            // only an admin can take CRUD operations to collections & delete any users
+            // if not an admin, the user can only make CRUD operations to his/her account
+            isAdmin: user.isAdmin,
+          },
+        };
+        jwt.sign(
+          payload,
+          process.env.JWTSECRET,
+          {
+            expiresIn: 360000,
+          },
+          (error, token) => {
+            if (error) {
+              console.log("Error in jwt ", error);
+              throw error;
+            }
+            const { ...others } = user._doc;
+            return res.status(201).json({
+              token,
+              user: { ...others },
+            });
+          }
+        );
+      } else {
+        return res.status(403).send("Invalid signature");
+      }
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
@@ -95,13 +111,10 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const { userAccount, ...others } = req.body;
     const user = await User.findById(req.params.id);
-  
+
     if (userAccount) {
-      let salt = await bcrypt.genSalt(10);
-      newPassword = await bcrypt.hash(req.body.password, salt);
-      
-      if (userAccount!=user.userAccount) {
-        return res.status(400).json({ msg: "MetaMask account mismatched" });
+      if (userAccount != user.userAccount) {
+        return res.status(403).json({ msg: "MetaMask account mismatched" });
       }
     }
     const updatedUser = await User.findByIdAndUpdate(
@@ -109,7 +122,6 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
       {
         $set: {
           ...others,
-         
         },
       },
       // To ensure it returns the updated User
@@ -118,7 +130,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
     res.status(200).json(updatedUser);
   } catch (err) {
     if (err.name === "CastError") {
-      return res.status(400).json({ msg: "user doesn't exist" });
+      return res.status(404).json({ msg: "User Not Found" });
     }
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -132,12 +144,12 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.user.id);
     if (!user) {
-      return res.status(400).json({ msg: "user doesn't exist" });
+      return res.status(404).json({ msg: "User Not Found" });
     }
     res.status(200).json({ msg: "User is successfully deleted" });
   } catch (err) {
     if (err.name === "CastError") {
-      return res.status(400).json({ msg: "user doesn't exist" });
+      return res.status(404).json({ msg: "User Not Found" });
     }
     console.error(err.message);
     res.status(500).send("Server Error");
