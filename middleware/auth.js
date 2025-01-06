@@ -20,6 +20,7 @@ const verifyToken = (req, res, next) => {
     req.user = decoded.user;
     next();
   } catch (error) {
+    console.log("Error in decoding ",error.message)
     console.error(error.message);
     res.status(403).send("Token is not valid");
   }

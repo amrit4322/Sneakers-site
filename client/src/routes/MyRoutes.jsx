@@ -22,6 +22,8 @@ import MyAddress from "../pages/User/Profile/MyAddress";
 import Notifications from "../pages/User/Profile/Notifications";
 import Password from "../pages/User/Profile/Password";
 import PaymentSuccessful from "../components/PaymentSuccessful";
+import LoginMetaMask from "../pages/User/LoginMetaMask";
+import RegisterMetaMask from "../pages/User/RegisterMetaMask";
 
 const MyRoutes = () => {
   const user = false;
@@ -41,8 +43,8 @@ const MyRoutes = () => {
         <Route path="/products/women" element={<Women />} />
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={user ? <Navigate to="/" replace={true}  /> : <Login />} />
-        <Route path="/register" element={user ? <Navigate to="/" replace={true}  /> : <Register />} />
+        <Route path="/login" element={user ? <Navigate to="/" replace={true}  /> : <LoginMetaMask />} />
+        <Route path="/register" element={user ? <Navigate to="/" replace={true}  /> : <RegisterMetaMask />} />
         <Route path="/user-profile" element={ <UserProfile/>}>
           <Route path="" element={<MyAccount />} />
           <Route path="orders" element={<MyOrders />} />

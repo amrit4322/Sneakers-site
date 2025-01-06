@@ -1,14 +1,17 @@
 const mongoose = require("mongoose");
-
+const dotenv = require("dotenv")
+dotenv.config({ path: './config/config.env' });
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb+srv://dulanjalisenarathna93:E2JUb0zfaT2FVp8D@cluster0.exkxkun.mongodb.net/reactjs-food-delivery-app', {
+    mongoose.set('strictQuery', false);
+    console.log("MongoDB LINK ", process.env.MONGODB_LINK)
+    await mongoose.connect(process.env.MONGODB_LINK, {
       useNewUrlParser: true,
     });
 
     console.log("MongoDB Connected...");
   } catch (err) {
-    console.error(err.message);
+    console.error("Error while conne",err.message);
     process.exit(1);
   }
 };

@@ -13,7 +13,7 @@ dotenv.config({ path: "../config/config.env" });
 // @ access Private
 router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select("-password");
+    const user = await User.findById(req.params.id);
     res.status(200).json(user);
   } catch (err) {
     if (err.name === "CastError") {
@@ -67,19 +67,19 @@ router.post(
   body("username", "Please enter a username").not().isEmpty(),
   body("email", "Please include a valid email").isEmail(),
   body(
-    "password",
-    "Please password shouldnt be less than 6 characters"
-  ).isLength({ min: 5 }),
+    "userAccount",
+    "Please attach Metamask for registration"
+  ).isEthereumAddress(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstname, lastname, username, email, password } = req.body;
+    const { firstname, lastname, username, email, userAccount } = req.body;
 
     try {
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ userAccount });
 
       if (user) {
         return res.status(400).send("User already exists");
@@ -91,14 +91,14 @@ router.post(
         lastname,
         username,
         email,
-        password,
+        userAccount,
       });
 
-      let salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+      // let salt = await bcrypt.genSalt(10);
+      // user.password = await bcrypt.hash(password, salt);
 
       await user.save();
-
+      console.log("successfully registered");
       const payload = {
         user: {
           id: user.id,

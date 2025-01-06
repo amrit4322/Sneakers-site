@@ -4,9 +4,10 @@ const UserSchema = new mongoose.Schema(
   {
     firstname: { type: String, required: true},
     lastname: { type: String, required: true},
+    userAccount: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    // password: { type: String, required: true },
     isAdmin : {type: Boolean, default: false},
     phone: String,
     gender: String
@@ -14,4 +15,4 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", UserSchema)
+module.exports = mongoose.model("UserMeta", UserSchema)

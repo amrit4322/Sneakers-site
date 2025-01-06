@@ -16,7 +16,8 @@ dotenv.config({ path: "../config/config.env" });
 // @ access   Private
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+   
+    const user = await User.findById(req.user.id)
     if (!user) {
       return res.status(400).json({ msg: "user doesn't exist" });
     }
@@ -32,28 +33,29 @@ router.get("/", verifyToken, async (req, res) => {
 // @ access   Public
 router.post(
   "/",
-  body("email", "Please include a valid email").isEmail(),
-  body("password", "Password is required").exists(),
+  body("userAccount", "No address attached").isEthereumAddress(),
+  // body("password", "Password is required").exists(),
 
   async (req, res) => {
+   
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
-    const { email, password } = req.body;
+  
+    const { userAccount } = req.body;
 
     try {
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ userAccount });
+       if (!user) {
+       // if account not found
+       return res.status(400).json({ msg: "user doesn't exist" });
+      
+      
+    }
+      
 
-      if (!user) {
-        return res.status(400).json({ msg: "Email is invalid" });
-      }
-
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ msg: "Password is invalid" });
-      }
+     
 
       const payload = {
         user: {
@@ -70,7 +72,9 @@ router.post(
           expiresIn: 360000,
         },
         (error, token) => {
-          if (error) throw error;
+          if (error){ 
+            console.log("Error in jwt ",error)
+            throw error};
           const { password, ...others } = user._doc; 
           res.json({
             token, user: {...others}
@@ -89,18 +93,15 @@ router.post(
 // @ access   Private
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const { password, currentPassword, ...others } = req.body;
+    const { userAccount, ...others } = req.body;
     const user = await User.findById(req.params.id);
-    let newPassword;
-    // if (!user) {
-    //   return res.status(400).json({ msg: "user doesn't exist" });
-    // }
-    if (password) {
+  
+    if (userAccount) {
       let salt = await bcrypt.genSalt(10);
       newPassword = await bcrypt.hash(req.body.password, salt);
-      const isMatch = await bcrypt.compare(currentPassword, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ msg: "Old password isn't correct" });
+      
+      if (userAccount!=user.userAccount) {
+        return res.status(400).json({ msg: "MetaMask account mismatched" });
       }
     }
     const updatedUser = await User.findByIdAndUpdate(
@@ -108,7 +109,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
       {
         $set: {
           ...others,
-          password: newPassword,
+         
         },
       },
       // To ensure it returns the updated User

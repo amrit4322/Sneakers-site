@@ -2,12 +2,16 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const path = require('path');
+const cors = require('cors');
 
 dotenv.config({ path: './config/config.env' });
 connectDB();
 
+
 const app = express();
 
+//for enabling cors origin
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json({ extended: false }));
 
 const PORT = process.env.PORT || 5000;
